@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+      table, th, td {
+          border: 1px solid gray;
+          padding: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <table>
+    <tr>
+      <th>Status</th>
+      <th>#</th>
+      <th>#</th>
+    </tr>
+    <tr>
+      <% docs.forEach(function(status){ %>
+        <td><%= status._id %></td>
+      <td><%= status.nome %></td>
+      <td><a href="/editStatus/<%= status._id %>">Editar</a></td>
+      <td><a href="/deleteStatus/<%= status._id %>" 
+        onclick="return confirm('Tem certeza que deseja excluir?');">Excluir</a></td>
+    </tr>  
+      <% }) %>
+    </table>
+    <hr />
+    <p><%= count %> status encontradas!</p>
+    <hr />
+    <a href="/newStatus">Cadastrar novo status</a>
+  </body>
+</html>

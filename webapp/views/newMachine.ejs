@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+      table, th, td {
+          border: 1px solid gray;
+          padding: 8px;
+          text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <form action="<%= action %>" method="POST">
+      <p>Nome:<input type="text" name="nome" value="<%= doc.nome %>" /></p>
+      <p>Código do Evento:<input type="number" name="events_id" value="<%= doc.events_id %>" /></p>
+      <input type="submit" value="Salvar" />
+    </form>
+      <!--Lista de Status-->
+      <table>
+        <tr>
+          <th>Código do Status</th>
+          <th>Nome do Status</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Ativo</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Inativo</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Ocioso</td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <th>Código do Evento</th>
+          <th>Data</th>
+          <th>Código do Status</th>
+          <th>Prioridade</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>ISODate("2020-08-15T23:30:00Z")</td>
+          <td>1</td>
+          <td>Alta</td>
+        </tr>
+          <td>2</td>
+          <td>ISODate("2020-08-15T23:31:00Z")</td>
+          <td>2</td>
+          <td>Média</td>
+        <tr>
+          <td>3</td>
+          <td>ISODate("2020-08-15T23:32:00Z")</td>
+          <td>3</td>
+          <td>Baixa</td>
+        </tr>
+      </table>
+  </body>
+</html>
+
