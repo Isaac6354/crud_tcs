@@ -2,8 +2,7 @@ Recursos utilizados no desenvolvimento:
 Node.Js; 
 Express.Js; 
 Conceito Rest; 
-MongoDb; 
-Mongoose; 
+MongoDb;  
 PostMan (testar a API criada);
 
 Executando a Aplicação: 
