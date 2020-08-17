@@ -1,4 +1,4 @@
-Recursos utilizados no desenvolvimento: 
+Recursos utilizados no desenvolvimento
 Node.Js; 
 Express.Js; 
 Conceito Rest; 
