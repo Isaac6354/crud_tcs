@@ -8,6 +8,7 @@
 e guardado o resultado dele em uma variável global. 
 Ao carregar o módulo db, acabamos fazendo a conexão com o Mongo e 
 retornamos aquele objeto vazio do module.exports do db.js */
+//global.db = require('../dbStatus');
 global.db = require('../db');
 var app = require('../app');
 var debug = require('debug')('webapp:server');

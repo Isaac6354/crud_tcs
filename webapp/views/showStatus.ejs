@@ -19,7 +19,7 @@
       <th>#</th>
     </tr>
     <tr>
-      <% docs.forEach(function(status){ %>
+      <% status.forEach(function(status){ %>
         <td><%= status._id %></td>
       <td><%= status.nome %></td>
       <td><a href="/editStatus/<%= status._id %>">Editar</a></td>
@@ -29,7 +29,7 @@
       <% }) %>
     </table>
     <hr />
-    <p><%= count %> status encontradas!</p>
+    <p><%= count %> status encontrados!</p>
     <hr />
     <a href="/newStatus">Cadastrar novo status</a>
   </body>
