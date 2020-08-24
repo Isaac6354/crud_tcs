@@ -18,25 +18,47 @@ function findAll(pagina){
     const tamanhoSkip = TAMANHO_PAGINA * (pagina - 1); 
     return global.conn.collection("machines")
         .find({}).
-        skip(tamanhoSkip)
+         skip(tamanhoSkip)
         .limit(TAMANHO_PAGINA)
         .toArray(); 
 }
 
 //Status collection
-function findAllStatus(callback){  
-    global.conn.collection("status").find({}).toArray(callback);
+const PAGE_SIZE = 5;
+function findAllStatus(paginaStatus){ 
+    const tamanhoSkipStatus = PAGE_SIZE * (paginaStatus - 1); 
+    return global.conn.collection("machineStatus")
+        .find({}).
+         skip(tamanhoSkipStatus)
+        .limit(PAGE_SIZE)
+        .toArray(); 
+}
+
+//Sensor events collection
+const PAGE_SIZE_EVENTS = 5;
+function findAllEvents(paginaEvents){ 
+    const tamanhoSkipEvents = PAGE_SIZE_EVENTS * (paginaEvents - 1); 
+    return global.conn.collection("sensorEvents")
+        .find({}).
+         skip(tamanhoSkipEvents)
+        .limit(PAGE_SIZE_EVENTS)
+        .toArray(); 
 }
 
 /* Insere máquinas usando a conexão global e, 
 novamente, executando um callback ao seu término */
-function insert(machine, callback){
+function insertOne(machine, callback){
     global.conn.collection("machines").insert(machine, callback);
 }
 
 //Status collection
-function insertStatus(status, callback){
-    global.conn.collection("status").insert(status, callback);
+function insertOneStatus(machineStatus, callback){
+    global.conn.collection("machineStatus").insert(machineStatus, callback);
+}
+
+//sensorEvents collection
+function insertOneEvent(sensorEvents, callback){
+    global.conn.collection("sensorEvents").insert(sensorEvents, callback);
 }
 
 /* Essa função retorna apenas uma máquina, baseada em seu _id. Como nosso filtro do find será o id, 
@@ -50,7 +72,7 @@ function findOne(id, callback){
 //Status collection
 var ObjectId = require("mongodb").ObjectId;
 function findOneStatus(id, callback){  
-    global.conn.collection("status").find(new ObjectId(id)).toArray(callback);
+    global.conn.collection("machineStatus").find(new ObjectId(id)).toArray(callback);
 }
 
 /* Essa função passa o filtro do update para saber qual documento será afetado 
@@ -60,8 +82,8 @@ function update(id, machine, callback){
 }
 
 //Status collection
-function updateStatus(id, status, callback){
-    global.conn.collection("status").updateOne({_id: new ObjectId(id)}, {$set: status}, callback);
+function updateStatus(id, machineStatus, callback){
+    global.conn.collection("machineStatus").updateOne({_id: new ObjectId(id)}, {$set: machineStatus}, callback);
 }
 
 //Machine collection
@@ -71,7 +93,7 @@ function deleteOne(id, callback){
 
 //Status collection
 function deleteOneStatus(id, callback){
-    global.conn.collection("status").deleteOne({_id: new ObjectId(id)}, callback);
+    global.conn.collection("machineStatus").deleteOne({_id: new ObjectId(id)}, callback);
 }
 
 /* Essa função retorna a quantidade de documentos na coleção machines. */
@@ -81,7 +103,31 @@ function countAll(){
 
 //status collection
 function countAllStatus(){  
-    return global.conn.collection("status").countDocuments();
+    return global.conn.collection("machineStatus").countDocuments();
 }
 
-module.exports = { findAll, insert, findOne, update, deleteOne, countAll, TAMANHO_PAGINA, findAllStatus, insertStatus, findOneStatus, updateStatus, deleteOneStatus, countAllStatus }
+//Sensor events collection
+function countAllEvents(){  
+    return global.conn.collection("sensorEvents").countDocuments();
+}
+
+/* Função que faz um join entre a coleção machines e machineStatus
+function getMachineByLastStatus(idMaquina, idStatus, callback){
+    var objIdMaquina = ObjectId(idMaquina);
+    var objIdStatus = ObjectId(idStatus);
+
+    mongodb.connect((err, db) => {
+        db.collection("machines").aggregate([
+            {$match: {"idMaquina": objIdMaquina}},
+            {$unwind: "$machines.NomeMaquina"},
+            {$match: {"machineStatus.idStatus": objIdStatus}},
+            {$unwind: "$machineStatus.descricaoStatus"},
+            {$group: {_id: { idMaquina: "$machines.idMaquina", NomeMaquina: "$machines.NomeMaquina"}}}
+        ]).toArray((err, sensorEvents) => {
+            if(err) return callback(err, null);
+            callback(err, sensorEvents.map(item => { return {idMaquina: item.idMaquina, idStatus: item._id.idStatus, data_Hora: item.data_Hora }}));
+        });
+    });
+}*/
+
+module.exports = { findAll, insertOne, findOne, update, deleteOne, countAll, TAMANHO_PAGINA, findAllStatus, insertOneStatus, findOneStatus, updateStatus, deleteOneStatus, countAllStatus, PAGE_SIZE, insertOneEvent, findAllEvents, countAllEvents, PAGE_SIZE_EVENTS }

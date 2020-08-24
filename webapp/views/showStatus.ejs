@@ -13,24 +13,25 @@
   <body>
     <h1><%= title %></h1>
     <table>
-    <tr>
-      <th>Status</th>
-      <th>#</th>
-      <th>#</th>
-    </tr>
-    <tr>
-      <% status.forEach(function(status){ %>
-        <td><%= status._id %></td>
-      <td><%= status.nome %></td>
-      <td><a href="/editStatus/<%= status._id %>">Editar</a></td>
-      <td><a href="/deleteStatus/<%= status._id %>" 
-        onclick="return confirm('Tem certeza que deseja excluir?');">Excluir</a></td>
-    </tr>  
-      <% }) %>
+      <tr>
+        <th>Status</th>
+        <th>Descrição</th>
+        <th>Edição</th>
+        <th>Exclusão</th>
+      </tr>
+      <tr>
+        <% status.forEach(function(machineStatus){ %>
+          <td><%= machineStatus.idStatus %></td>
+        <td><%= machineStatus.descricaoStatus %></td>
+        <td><a href="/showStatus/editStatus/<%= machineStatus._id %>">Editar</a></td>
+        <td><a href="/showStatus/deleteStatus/<%= machineStatus._id %>" 
+          onclick="return confirm('Tem certeza que deseja excluir?');">Excluir</a></td>
+      </tr>  
+        <% }) %>
     </table>
     <hr />
-    <p><%= count %> status encontrados!</p>
+    <p><%= countStatus %> status encontrados!</p>
     <hr />
-    <a href="/newStatus">Cadastrar novo status</a>
+    <a href="/showStatus/newStatus">Cadastrar novo status</a>
   </body>
 </html>

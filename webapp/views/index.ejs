@@ -1,10 +1,7 @@
-<!--O objeto docs, que será retornado pela primeira rota criada no index.js, será iterada
-com um forEach e seus objetos serão utilizados um-a-um 
-para compor uma lista não-ordenada com seus nomes.-->
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>Acompanhamento de Máquinas</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <style>
       table, th, td {
@@ -15,42 +12,28 @@ para compor uma lista não-ordenada com seus nomes.-->
     </style>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <table>
-    <tr>
-      <th>Máquinas</th>
-      <th>Status Atual<br />
-      (Código do Evento)</th>
-      <th>Edição</th>
-      <th>Exclusão</th>
-    </tr>
-    <tr>
-      <% docs.forEach(function(machine){ %>  
-      <td><%= machine.nome %></td>
-      <td><%= machine.events_id %></td>
-      <td><a href="/editMachine/<%= machine._id %>">Editar</a></td>
-      <!--Aqui, o link de cada máquina aponta para uma rota /deleteMachine passando _id do mesmo. 
-      Essa rota será acessada via GET.-->
-      <td><a href="/deleteMachine/<%= machine._id %>" 
-        onclick="return confirm('Tem certeza que deseja excluir?');">Excluir</a></td>
+    <h1>Acompanhamento de Máquinas</h1>
+    <hr />
+    <button onclick="document.location='/showMachines'">Máquinas</button> 
+    <button onclick="document.location='/showStatus'">Status</button> 
+    <button onclick="document.location='/newEvent'">Eventos</button> 
+     <!--Acompanhamento de Máquinas-->
+     <h1><%= title %></h1>
+     <table>
+      <tr>
+        <th>Código da Máquina</th>
+        <th>Código do Status</th>
+        <th>Data/Hora</th>
+      </tr>
+      <tr>
+        <% events.forEach(function(sensorEvents){ %>
+          <td><%= sensorEvents.idMaquina %></td>
+          <td><%= sensorEvents.idStatus %></td>
+          <td><%= sensorEvents.data_Hora %></td>
       </tr>  
-      <% }) %>
+        <% }) %>
     </table>
     <hr />
-    <p><%= count %> máquinas encontradas!</p>
-    <!--Se a variável de iteração ‘i’ for diferente da página atual, 
-    escreve um link HTML na tela, caso contrário, escreve apenas o número da página.-->
-    <p>
-      <%
-        for(var i=1; i <= qtdPaginas; i++) {
-            if(i !== pagina){
-          %>
-            <a href="/<%= i %>"><%= i %></a> | 
-            <%} else {%>
-            <%= i %> |
-      <% } }%>
-    </p>
-    <hr />
-    <a href="/newMachine">Cadastrar nova máquina</a>
+    <p><%= countEvents %> eventos encontrados!</p>
   </body>
 </html>

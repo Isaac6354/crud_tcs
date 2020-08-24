@@ -1,0 +1,55 @@
+<!--O objeto docs, que será retornado pela primeira rota criada no index.js, será iterada
+com um forEach e seus objetos serão utilizados um-a-um 
+para compor uma lista não-ordenada com seus nomes.-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+      table, th, td {
+          border: 1px solid gray;
+          padding: 8px;
+          text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <table>
+    <tr>
+      <th>Código da Máquina</th>
+      <th>Nome da Máquina</th>
+      <th>Edição</th>
+      <th>Exclusão</th>
+    </tr>
+    <tr>
+      <% docs.forEach(function(machine){ %>  
+      <td><%= machine.idMaquina %></td>
+      <td><%= machine.NomeMaquina %></td>
+      <td><a href="/showMachines/editMachine/<%= machine._id %>">Editar</a></td>
+      <!--Aqui, o link de cada máquina aponta para uma rota /deleteMachine passando _id do mesmo. 
+      Essa rota será acessada via GET.-->
+      <td><a href="/showMachines/deleteMachine/<%= machine._id %>" 
+        onclick="return confirm('Tem certeza que deseja excluir?');">Excluir</a></td>
+      </tr>  
+      <% }) %>
+    </table>
+    <hr />
+    <p><%= count %> máquinas encontradas!</p>
+    <!--Se a variável de iteração ‘i’ for diferente da página atual, 
+    escreve um link HTML na tela, caso contrário, escreve apenas o número da página.-->
+    <p>
+      <%
+        for(var i=1; i <= qtdPaginas; i++) {
+            if(i !== pagina){
+          %>
+            <a href="/<%= i %>"><%= i %></a> | 
+            <%} else {%>
+            <%= i %> |
+      <% } }%>
+    </p>
+    <hr />
+    <a href="/showMachines/newMachine">Cadastrar nova máquina</a>
+  </body>
+</html>
